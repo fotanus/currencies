@@ -20,6 +20,19 @@ RSpec.describe CurrenciesController, type: :controller do
       get :index
       expect(response).to have_http_status(:success)
     end
-  end
 
+    it "uses the currency history fetcher" do
+      expect(
+        CurrencyHistoryFetcher
+      ).to receive(:fetch).twice.and_call_original
+      get :index
+    end
+
+    it "uses the nasdaq history fetcher" do
+      expect(
+        NasdaqHistoryFetcher
+      ).to receive(:fetch).and_call_original
+      get :index
+    end
+  end
 end

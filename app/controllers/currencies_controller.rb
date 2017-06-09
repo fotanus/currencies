@@ -8,10 +8,20 @@ class CurrenciesController < ApplicationController
     nasdaq = NasdaqHistoryFetcher.fetch
 
     @categories = bitcoin.keys.map{ |x| Time.at(x).strftime("%Y-%m-%d") }.to_json
+
+    usd_series_base = {
+      yAxis: 0,
+      tooltip: { valuePrefix: 'US$ ' }
+    }
+    points_series_base = {
+      yAxis: 1,
+      dashStyle: 'longdash',
+      tooltip: { valueSuffix: ' points' }
+    }
     @series = [
-      { name: "Bitcoin", data:  bitcoin.values },
-      { name: "Ethereum", data:  ethereum.values },
-      { name: "NASDAQ", data:  nasdaq.values }
+      usd_series_base.merge({ name: "Bitcoin", data:  bitcoin.values }),
+      usd_series_base.merge({ name: "Ethereum", data:  ethereum.values }),
+      points_series_base.merge({ name: "NASDAQ", data:  nasdaq.values })
     ].to_json
   end
 end

@@ -3,7 +3,21 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $ ->
 	Highcharts.chart 'currency-chart',
-		title: text: 'Currency'
-		yAxis: title: text: 'USD'
+		title:
+      text: 'Currency'
+    tooltip:
+      shared: true
+		yAxis: [
+      title:
+        text: 'Buy price in USD'
+      labels:
+        format: 'US$ {value:,.2f}'
+    ,
+      title:
+        text: 'NASDAQ Index points'
+      labels:
+        format: '{value} points'
+      opposite: true
+    ]
 		xAxis: categories: JSON.parse($('#currency-chart').attr('data-chart-categories'))
 		series: JSON.parse($('#currency-chart').attr('data-chart-series'))
