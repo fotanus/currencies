@@ -1,5 +1,9 @@
 shared_examples_for "fetcher interface" do
   describe ".fetch" do
+    before do
+      Rails.cache.clear
+    end
+
 		context "when successfully retrieves the data from external api" do
 			before do
 				stub_request(
